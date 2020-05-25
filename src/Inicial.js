@@ -1,76 +1,68 @@
-import React, {Component} from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Animated,
-  Button,
-} from 'react-native';
+  SafeAreaView,
+  SectionList
+} from "react-native";
+// import Constants from "expo-constants";
 
-class Inicial extends Component {
-  state = {
-    email: '',
-    password: '',
-  };
-
-  handleLogar = () => {
-    console.log(this.state.email, this.state.password);
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>CARTÂO DE VACINA</Text>
-        <Animated.Image
-          source="https://image.flaticon.com/icons/png/512/101/101960.png"
-          style={styles.logo}
-        />
-      </View>
-    );
+const DATA = [
+  {
+    title: "Main dishes",
+    data: ["Pizza", "Burger", "Risotto"]
+  },
+  {
+    title: "Sides",
+    data: ["French Fries", "Onion Rings", "Fried Shrimps"]
+  },
+  {
+    title: "Drinks",
+    data: ["Water", "Coke", "Beer"]
+  },
+  {
+    title: "Desserts",
+    data: ["Cheese Cake", "Ice Cream"]
   }
-}
+];
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    color: '#FAFAFA',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#282c34',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 250,
-    height: 250,
-    marginBottom: 30,
-    marginTop: 30,
-  },
-  title: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  text: {
-    color: '#fff',
-  },
-  button: {
-    borderRadius: 3,
-    padding: 20,
-    marginVertical: 10,
-    marginTop: 10,
-    backgroundColor: '#1B95E0',
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-});
+const Item = ({ title }) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
+
+const Inicial = () => (
+  <SafeAreaView style={styles.container}>
+    <SectionList
+      sections={DATA}
+      keyExtractor={(item, index) => item + index}
+      renderItem={({ item }) => <Item title={item} />}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.header}>{title}</Text>
+      )}
+    />
+  </SafeAreaView>
+);
 
 export default Inicial;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginHorizontal: 16
+  },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8
+  },
+  header: {
+    fontSize: 32,
+    backgroundColor: "#fff"
+  },
+  title: {
+    fontSize: 24
+  }
+});

@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import api from './Service';
+
 import {
   StyleSheet,
   Text,
@@ -10,12 +12,22 @@ import {
 
 class App extends Component {
   state = {
-    email: '',
+    cpf: '',
     password: '',
   };
 
-  handleLogar = () => {
-    console.log(this.state.email, this.state.password);
+  handleLogar = async () => {
+    if (this.state.cpf.length === 0 || this.state.password.length === 0) {
+      this.setState({ error: 'Preencha usuário e senha para continuar!' }, () => false);
+    } else {
+      try {
+        const response = await api.get('/usuario/cpf/'+this.state.cpf);
+        console.log(response.data)
+          
+      } catch (_err) {
+        this.setState({ error: 'Houve um problema com o login, verifique suas credenciais!' });
+      }
+    }
   };
 
   render() {
@@ -28,8 +40,8 @@ class App extends Component {
         />
         <TextInput
           style={styles.input}
-          onChangeText={text => this.setState({email: text})}
-          value={this.state.email}
+          onChangeText={text => this.setState({cpf: text})}
+          value={this.state.cpf}
         />
         <TextInput
           style={styles.input}
