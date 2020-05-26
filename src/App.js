@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import api from './Service';
 import {useNavigation} from '@react-navigation/native';
+import icon from './icon-white.png'
 
 import {
   StyleSheet,
@@ -33,9 +34,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>CARTÂO DE VACINA</Text>
+      <Text style={styles.title}>CARTÃO DE VACINA</Text>
       <Animated.Image
-        source="https://image.flaticon.com/icons/png/512/101/101960.png"
+        source={icon}
         style={styles.logo}
       />
       <TextInput
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 250,
-    height: 250,
+    width: 150,
+    height: 150,
     marginBottom: 30,
     marginTop: 30,
   },

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { useRoute} from '@react-navigation/native';
 import api from './Service';
 
 import {StyleSheet, Text, View, ScrollView, SafeAreaView} from 'react-native';
@@ -29,41 +29,42 @@ export default function Inicicial() {
   const [data, setData] = useState([]);
   const route = useRoute();
 
-  const user = route.params;
+  // const user = route.params;
 
   useEffect(async () => {
-    const response = await api.get('/registro/' + user.ID);
+    const response = await api.get('/registro/' + route.params.ID);
     setData(response.data);
   }, []);
 
   return (
-    <SafeAreaView style={styles.scroll}>
-      <Text style={styles.title}>Minhas Vacinas</Text>
 
-      <ScrollView style={styles.scroll}>
-        {data.map(dado => (
-          <View style={styles.item}>
-            <Text style={styles.spanTitle}>{dado.vacina}</Text>
-            <Text style={styles.span}>{`Data de aplicação: ${dado.data.slice(
-              0,
-              10,
-            )} ${dado.hora}`}</Text>
-            <Text style={styles.span}>{`Aplicador: ${dado.aplicador}`}</Text>
-            <Text style={styles.span}>{`Dosagem: ${dado.dose}`}</Text>
-          </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
-  );
+    <SafeAreaView style={styles.scroll}>
+    <Text style={styles.title}>Minhas Vacinas</Text>
+    
+        <ScrollView style={styles.scroll}>
+    {data.map(dado => (
+      <View style={styles.item}>
+        <Text style={styles.spanTitle}>{dado.vacina}</Text>
+        <Text style={styles.span}>{`Data de aplicação: ${dado.data.slice(0, 10)} ${dado.hora}`}</Text>
+        <Text style={styles.span}>{`Aplicador: ${dado.aplicador}`}</Text>
+        <Text style={styles.span}>{`Dosagem: ${dado.dose}`}</Text>
+      </View>
+    ))}
+    </ScrollView>
+      </SafeAreaView>
+
+);
 }
 
+
 const styles = StyleSheet.create({
-  scroll: {
-    marginRight: '0px',
-    marginLeft: '0px',
+  scroll:{
+
+    marginRight: "0px",
+    marginLeft: "0px",
     /* padding: 0; */
-    width: '100%',
-    marginHorizontal: 20
+    width: "100%"
+
   },
   container: {
     flex: '1',
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     marginBottom: '25px',
   },
   scrollView: {
-    backgroundColor: 'pink'
+    backgroundColor: 'pink',
+    marginHorizontal: 20,
   },
 });
