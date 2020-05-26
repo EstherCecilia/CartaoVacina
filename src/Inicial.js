@@ -1,68 +1,111 @@
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  SectionList
-} from "react-native";
-// import Constants from "expo-constants";
+import React, {useEffect, useState} from 'react';
 
-const DATA = [
-  {
-    title: "Main dishes",
-    data: ["Pizza", "Burger", "Risotto"]
-  },
-  {
-    title: "Sides",
-    data: ["French Fries", "Onion Rings", "Fried Shrimps"]
-  },
-  {
-    title: "Drinks",
-    data: ["Water", "Coke", "Beer"]
-  },
-  {
-    title: "Desserts",
-    data: ["Cheese Cake", "Ice Cream"]
-  }
-];
+import {useNavigation, useRoute} from '@react-navigation/native';
+import api from './Service';
 
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+import {StyleSheet, Text, View, ScrollView, SafeAreaView} from 'react-native';
 
-const Inicial = () => (
-  <SafeAreaView style={styles.container}>
-    <SectionList
-      sections={DATA}
-      keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => <Item title={item} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={styles.header}>{title}</Text>
-      )}
-    />
-  </SafeAreaView>
-);
+// const data = [
+//   {
+//     vacina_nome: 'H1N1',
+//     dt_aplicacao: '2015-03-02',
+//     aplicador: 'Joana Dark',
+//     dose: 'Unica',
+//   },
+//   {
+//     vacina_nome: 'H1N1',
+//     dt_aplicacao: '2015-03-02',
+//     aplicador: 'Joana Dark',
+//     dose: 'Unica',
+//   },
+//   {
+//     vacina_nome: 'H1N1',
+//     dt_aplicacao: '2015-03-02',
+//     aplicador: 'Joana Dark',
+//     dose: 'Unica',
+//   },
+// ];
+export default function Inicicial() {
+  const [data, setData] = useState([]);
+  const route = useRoute();
 
-export default Inicial;
+  const user = route.params;
+
+  useEffect(async () => {
+    const response = await api.get('/registro/' + user.ID);
+    setData(response.data);
+  }, []);
+
+  return (
+    <SafeAreaView style={styles.scroll}>
+      <Text style={styles.title}>Minhas Vacinas</Text>
+
+      <ScrollView style={styles.scroll}>
+        {data.map(dado => (
+          <View style={styles.item}>
+            <Text style={styles.spanTitle}>{dado.vacina}</Text>
+            <Text style={styles.span}>{`Data de aplicação: ${dado.data.slice(
+              0,
+              10,
+            )} ${dado.hora}`}</Text>
+            <Text style={styles.span}>{`Aplicador: ${dado.aplicador}`}</Text>
+            <Text style={styles.span}>{`Dosagem: ${dado.dose}`}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
+  scroll: {
+    marginRight: '0px',
+    marginLeft: '0px',
+    /* padding: 0; */
+    width: '100%',
+    marginHorizontal: 20
+  },
   container: {
-    flex: 1,
-    marginHorizontal: 16
+    flex: '1',
+    padding: '50px 0',
+    justifyContent: 'center',
+    backgroundColor: '#f4f4f4',
+    alignItems: 'center',
   },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff"
+  spanTitle: {
+    marginLeft: '5px',
+    marginTop: '10px',
+    fontSize: '20px',
+    textAlign: 'left',
+    color: '#ff5722',
+    marginBottom: '20px',
   },
   title: {
-    fontSize: 24
-  }
+    fontSize: '40px',
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+    lineHeight: '1.6',
+    letterSpacing: '0.0075em',
+    color: '#ff5722',
+    textAlign: 'left',
+  },
+  span: {
+    marginLeft: '5px',
+    marginBottom: '10px',
+    fontSize: '15px',
+    textAlign: 'left',
+    color: '#ff5722',
+  },
+  item: {
+    flex: '1',
+    border: '1px solid #ccc',
+    margin: 'auto',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px #ccc',
+    backgroundColor: '#fff',
+    width: '90%',
+    marginBottom: '25px',
+  },
+  scrollView: {
+    backgroundColor: 'pink'
+  },
 });

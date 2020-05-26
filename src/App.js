@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import api from './Service';
+import {useNavigation} from '@react-navigation/native';
 
 import {
   StyleSheet,
@@ -10,54 +11,52 @@ import {
   Button,
 } from 'react-native';
 
-class App extends Component {
-  state = {
-    cpf: '',
-    password: '',
-  };
+export default function App() {
+  const [cpf, setCpf] = useState('');
+  const [password, setPassword] = useState('');
 
-  handleLogar = async () => {
-    if (this.state.cpf.length === 0 || this.state.password.length === 0) {
-      this.setState({ error: 'Preencha usuário e senha para continuar!' }, () => false);
-    } else {
-      try {
-        const response = await api.get('/usuario/cpf/'+this.state.cpf);
-        console.log(response.data)
-          
-      } catch (_err) {
-        this.setState({ error: 'Houve um problema com o login, verifique suas credenciais!' });
-      }
+  const navigation = useNavigation();
+
+  const handleLogar = async () => {
+    if (cpf.length === 0 || password.length === 0) return;
+    // this.setState(
+    //   {error: 'Preencha usuário e senha para continuar!'},
+    //   () => false,
+    // );
+
+    const response = await api.get('/usuario/cpf/' + cpf);
+    console.log(response.data[0].senha, password, response.data.length)
+    if (response.data.length > 0 && response.data[0].senha === password) {
+      navigation.navigate('Detail', response.data[0]);
     }
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>CARTÂO DE VACINA</Text>
-        <Animated.Image
-          source="https://image.flaticon.com/icons/png/512/101/101960.png"
-          style={styles.logo}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={text => this.setState({cpf: text})}
-          value={this.state.cpf}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={text => this.setState({password: text})}
-          secureTextEntry={this.state.password}
-          text="password"
-        />
-        <Button
-          onPress={this.handleLogar}
-          title="ENTRAR"
-          color="#841584"
-          accessibilityLabel="ENTRAR"
-        />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>CARTÂO DE VACINA</Text>
+      <Animated.Image
+        source="https://image.flaticon.com/icons/png/512/101/101960.png"
+        style={styles.logo}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={text => setCpf(text)}
+        value={cpf}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={text => setPassword(text)}
+        secureTextEntry={password}
+        text="password"
+      />
+      <Button
+        onPress={() => handleLogar()}
+        title="ENTRAR"
+        color="#841584"
+        accessibilityLabel="ENTRAR"
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -101,5 +100,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default App;

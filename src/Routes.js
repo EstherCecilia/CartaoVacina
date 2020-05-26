@@ -1,26 +1,19 @@
-import React, { Component } from 'react';
-import { Router, Scene } from 'react-native-router-flux';
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
-import ScarletScreen from './App';
-import GrayScreen from './Inicial';
+import Incidents from "./App"
+import Detail from './Inicial'
 
-const Routes = () => {
+const AppStack = createStackNavigator()
+
+export default function Routes() {
   return (
-    <Router>
-      <Scene key="root">
-        <Scene key="scarlet"
-          component={ScarletScreen}
-          title="Scarlet"
-          initial
-        />
-        <Scene
-          key="gray"
-          component={GrayScreen}
-          title="Gray"
-        />
-      </Scene>
-    </Router>
-  );
+    <NavigationContainer>
+      <AppStack.Navigator screenOptions={ {headerShown: false} }>
+        <AppStack.Screen name="Incidents" component={Incidents} />
+        <AppStack.Screen name="Detail" component={Detail} />
+      </AppStack.Navigator>
+    </NavigationContainer>
+  )
 }
-
-export default Routes;
