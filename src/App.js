@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import api from './Service';
 import {useNavigation} from '@react-navigation/native';
-import icon from './icon-white.png'
+import icon from './icon-white.png';
 
 import {
   StyleSheet,
@@ -19,26 +19,28 @@ export default function App() {
   const navigation = useNavigation();
 
   const handleLogar = async () => {
-    if (cpf.length === 0 || password.length === 0) return;
-    // this.setState(
-    //   {error: 'Preencha usuário e senha para continuar!'},
-    //   () => false,
-    // );
+    if (cpf.length === 0 || password.length === 0) {
+      console.log('Digite algo!');
+      return;
+    }
 
     const response = await api.get('/usuario/cpf/' + cpf);
-    console.log(response.data[0].senha, password, response.data.length)
-    if (response.data.length > 0 && response.data[0].senha === password) {
+    if (!response.data.length > 0) {
+      console.log('Usuario não encontrado!');
+
+      return;
+    }
+    if (response.data[0].senha === password) {
       navigation.navigate('Detail', response.data[0]);
+    } else {
+      console.log('Senha incorreta!');
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>CARTÃO DE VACINA</Text>
-      <Animated.Image
-        source={icon}
-        style={styles.logo}
-      />
+      <Animated.Image source={icon} style={styles.logo} />
       <TextInput
         style={styles.input}
         onChangeText={text => setCpf(text)}

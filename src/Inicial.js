@@ -1,70 +1,84 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import { useRoute} from '@react-navigation/native';
-import api from './Service';
+import {useRoute, useNavigation} from '@react-navigation/native';
 
-import {StyleSheet, Text, View, ScrollView, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 
-// const data = [
-//   {
-//     vacina_nome: 'H1N1',
-//     dt_aplicacao: '2015-03-02',
-//     aplicador: 'Joana Dark',
-//     dose: 'Unica',
-//   },
-//   {
-//     vacina_nome: 'H1N1',
-//     dt_aplicacao: '2015-03-02',
-//     aplicador: 'Joana Dark',
-//     dose: 'Unica',
-//   },
-//   {
-//     vacina_nome: 'H1N1',
-//     dt_aplicacao: '2015-03-02',
-//     aplicador: 'Joana Dark',
-//     dose: 'Unica',
-//   },
-// ];
 export default function Inicicial() {
-  const [data, setData] = useState([]);
   const route = useRoute();
 
   // const user = route.params;
 
-  useEffect(async () => {
-    const response = await api.get('/registro/' + route.params.ID);
-    setData(response.data);
-  }, []);
+  const navigation = useNavigation();
+
+  const handleRegsitro =  () => {
+    console.log(route.params)
+    navigation.navigate('Register', route.params);
+   
+  };
 
   return (
-
     <SafeAreaView style={styles.scroll}>
-    <Text style={styles.title}>Minhas Vacinas</Text>
-    
-        <ScrollView style={styles.scroll}>
-    {data.map(dado => (
-      <View style={styles.item}>
-        <Text style={styles.spanTitle}>{dado.vacina}</Text>
-        <Text style={styles.span}>{`Data de aplicação: ${dado.data.slice(0, 10)} ${dado.hora}`}</Text>
-        <Text style={styles.span}>{`Aplicador: ${dado.aplicador}`}</Text>
-        <Text style={styles.span}>{`Dosagem: ${dado.dose}`}</Text>
-      </View>
-    ))}
-    </ScrollView>
-      </SafeAreaView>
+      <Text style={styles.title}>{`Bem vindo ${route.params.nome}`}</Text>
+      <View
+      onClick={handleRegsitro}
+        style={{
+          flexDirection: 'row',
+          padding: 15,
+        }}>
+        <View style={styles.itemI}>
+          <Text style={styles.spanTitle}>Minhas</Text>
+          <Text style={styles.span}>vacinas</Text>
+        </View>
 
-);
+        <View style={styles.item}>
+          <Text style={styles.spanTitle}>Calendário</Text>
+          <Text style={styles.span}>de vacinas</Text>
+        </View>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          padding: 15,
+        }}>
+        <View style={styles.itemI}>
+          <Text style={styles.spanTitle}>Minhas vacinas</Text>
+          <Text style={styles.span}>não Aplicadas</Text>
+        </View>
+
+        <View style={styles.item}>
+          <Text style={styles.spanTitle}>Locais</Text>
+          <Text style={styles.span}>credenciados</Text>
+        </View>
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          padding: 15,
+        }}>
+        <View style={styles.itemI}>
+          <Text style={styles.spanTitle}>Emitir</Text>
+          <Text style={styles.span}>certificado</Text>
+        </View>
+
+        <View style={styles.item}>
+          <Text style={styles.spanTitle}>Entrar</Text>
+          <Text style={styles.span}>em contato</Text>
+        </View>
+      </View>
+
+
+    </SafeAreaView>
+  );
 }
 
-
 const styles = StyleSheet.create({
-  scroll:{
-
-    marginRight: "0px",
-    marginLeft: "0px",
+  scroll: {
+    marginRight: '0px',
+    marginLeft: '0px',
     /* padding: 0; */
-    width: "100%"
-
+    width: '100%',
   },
   container: {
     flex: '1',
@@ -82,7 +96,7 @@ const styles = StyleSheet.create({
     marginBottom: '20px',
   },
   title: {
-    fontSize: '40px',
+    fontSize: '30px',
     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     lineHeight: '1.6',
     letterSpacing: '0.0075em',
@@ -96,6 +110,17 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: '#ff5722',
   },
+  itemI: {
+    flex: '1',
+    border: '1px solid #ccc',
+    margin: 'auto',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px #ccc',
+    backgroundColor: '#fff',
+    width: '30%',
+    marginBottom: '20px',
+    marginRight: '5px',
+  },
   item: {
     flex: '1',
     border: '1px solid #ccc',
@@ -103,8 +128,8 @@ const styles = StyleSheet.create({
     borderRadius: '10px',
     boxShadow: '0 0 10px #ccc',
     backgroundColor: '#fff',
-    width: '90%',
-    marginBottom: '25px',
+    width: '35%',
+    marginBottom: '20px',
   },
   scrollView: {
     backgroundColor: 'pink',
