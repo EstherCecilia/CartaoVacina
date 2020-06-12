@@ -16,6 +16,11 @@ export default function Inicicial() {
     navigation.navigate('Register', route.params);
   };
 
+  const handleCalendario = () => {
+    console.log('AA');
+    navigation.navigate('Calender');
+  };
+
   return (
     <SafeAreaView style={styles.scroll}>
       <Text style={styles.title}>{`Bem vindo ${
@@ -39,7 +44,7 @@ export default function Inicicial() {
           <Text style={styles.span}>vacinas</Text>
         </View>
 
-        <View style={styles.item}>
+        <View style={styles.item} onClick={handleCalendario}>
           <Image
             style={styles.tinyLogo}
             source={{
