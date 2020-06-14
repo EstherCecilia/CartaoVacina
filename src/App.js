@@ -31,7 +31,7 @@ export default function App() {
       return;
     }
     if (response.data[0].senha === password) {
-      navigation.navigate('Detail', response.data[0]);
+      navigation.navigate('Home', response.data[0]);
     } else {
       console.log('Senha incorreta!');
     }
@@ -53,6 +53,8 @@ export default function App() {
         text="password"
       />
       <Button
+        style={{width: '45%',
+        height: '40px'}}
         onPress={() => handleLogar()}
         title="ENTRAR"
         color="#841584"
@@ -91,6 +93,8 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   button: {
+    width: '45%',
+    height: '40px',
     borderRadius: 3,
     padding: 20,
     marginVertical: 10,

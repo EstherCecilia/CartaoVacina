@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useRoute, useNavigation} from '@react-navigation/native';
 
-import {StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 
 export default function Inicicial() {
   const route = useRoute();
@@ -11,47 +11,35 @@ export default function Inicicial() {
 
   const navigation = useNavigation();
 
-  const handleRegsitro = () => {
-    console.log(route.params);
-    navigation.navigate('Register', route.params);
+  const handleRegsitro =  () => {
+    navigation.navigate('Registros', route.params);
+   
   };
 
-  const handleCalendario = () => {
-    console.log('AA');
-    navigation.navigate('Calender');
-  };
+  const handleCalender = () => {
+    navigation.navigate('Calendario');
+  }
+
+  const handleConfig = () => {
+    navigation.navigate('Notificacao', route.params);
+  }
 
   return (
     <SafeAreaView style={styles.scroll}>
-      <Text style={styles.title}>{`Bem vindo ${
-        route.params.nome.split(' ')[0]
-      }`}</Text>
+      <Text style={styles.title}>{`Bem vindo ${route.params.nome.split(' ')[0]}`}</Text>
       <View
-        onClick={handleRegsitro}
         style={{
           flexDirection: 'row',
           padding: 15,
         }}>
-        <View style={styles.itemI}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri:
-                'https://www.netclipart.com/pp/m/404-4049840_transparent-pencil-icon-png-pen-vector-icon.png',
-            }}
-          />
+        <View style={styles.itemI}
+      onClick={handleRegsitro}>
           <Text style={styles.spanTitle}>Minhas</Text>
           <Text style={styles.span}>vacinas</Text>
         </View>
 
-        <View style={styles.item} onClick={handleCalendario}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri:
-                'https://www.netclipart.com/pp/m/404-4049840_transparent-pencil-icon-png-pen-vector-icon.png',
-            }}
-          />
+        <View style={styles.item}
+      onClick={handleCalender}>
           <Text style={styles.spanTitle}>Calendário</Text>
           <Text style={styles.span}>de vacinas</Text>
         </View>
@@ -62,25 +50,11 @@ export default function Inicicial() {
           padding: 15,
         }}>
         <View style={styles.itemI}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri:
-                'https://www.netclipart.com/pp/m/404-4049840_transparent-pencil-icon-png-pen-vector-icon.png',
-            }}
-          />
           <Text style={styles.spanTitle}>Minhas vacinas</Text>
           <Text style={styles.span}>não Aplicadas</Text>
         </View>
 
         <View style={styles.item}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri:
-                'https://www.netclipart.com/pp/m/404-4049840_transparent-pencil-icon-png-pen-vector-icon.png',
-            }}
-          />
           <Text style={styles.spanTitle}>Locais</Text>
           <Text style={styles.span}>credenciados</Text>
         </View>
@@ -92,29 +66,18 @@ export default function Inicicial() {
           padding: 15,
         }}>
         <View style={styles.itemI}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri:
-                'https://www.netclipart.com/pp/m/404-4049840_transparent-pencil-icon-png-pen-vector-icon.png',
-            }}
-          />
           <Text style={styles.spanTitle}>Emitir</Text>
           <Text style={styles.span}>certificado</Text>
         </View>
 
-        <View style={styles.item}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri:
-                'https://www.netclipart.com/pp/m/404-4049840_transparent-pencil-icon-png-pen-vector-icon.png',
-            }}
-          />
-          <Text style={styles.spanTitle}>Entrar</Text>
-          <Text style={styles.span}>em contato</Text>
+        <View style={styles.item}
+      onClick={handleConfig}>
+          <Text style={styles.spanTitle}>Configurar</Text>
+          <Text style={styles.span}>notificações</Text>
         </View>
       </View>
+
+
     </SafeAreaView>
   );
 }
@@ -135,19 +98,14 @@ const styles = StyleSheet.create({
   },
   spanTitle: {
     marginLeft: '5px',
-    marginTop: '5px',
+    marginTop: '10px',
     fontSize: '20px',
     textAlign: 'left',
     color: '#ff5722',
-    marginBottom: '5px',
-  },
-  tinyLogo: {
-    width: 30,
-    height: 30,
-    margin: '5px',
+    marginBottom: '20px',
   },
   title: {
-    fontSize: '25px',
+    fontSize: '30px',
     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     lineHeight: '1.6',
     letterSpacing: '0.0075em',

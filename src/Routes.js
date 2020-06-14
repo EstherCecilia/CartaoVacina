@@ -6,17 +6,19 @@ import Incidents from './App';
 import Register from './Registros';
 import Detail from './Inicial';
 import Calender from './Vacinas';
+import Config from './Config';
 
 const AppStack = createStackNavigator();
 
 export default function Routes() {
   return (
     <NavigationContainer>
-      <AppStack.Navigator screenOptions={{headerShown: false}}>
-        <AppStack.Screen name="Incidents" component={Incidents} />
-        <AppStack.Screen name="Register" component={Register} />
-        <AppStack.Screen name="Calender" component={Calender} />
-        <AppStack.Screen name="Detail" component={Detail} />
+      <AppStack.Navigator screenOptions={{headerShown: true}}>
+        <AppStack.Screen name="Login" component={Incidents} />
+        <AppStack.Screen name="Registros" component={Register} />
+        <AppStack.Screen name="Calendario" component={Calender} />
+        <AppStack.Screen name="Home" component={Detail} />
+        <AppStack.Screen name="Notificacao" component={Config} />
       </AppStack.Navigator>
     </NavigationContainer>
   );

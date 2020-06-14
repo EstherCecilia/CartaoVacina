@@ -1,34 +1,26 @@
 import React from 'react';
 
-import {useRoute, useNavigation} from '@react-navigation/native';
 
-import {StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 
 export default function Inicicial() {
-  const route = useRoute();
 
   // const user = route.params;
 
-  const navigation = useNavigation();
 
-  const handleRegsitro = () => {
-    console.log(route.params);
-    navigation.navigate('Register', route.params);
-  };
 
   return (
     <SafeAreaView style={styles.scroll}>
       <View
-        onClick={handleRegsitro}
         style={{
           flexDirection: 'row',
         }}>
         <View style={styles.column}>
-          <Text style={styles.spanTitle}>Minhas</Text>
+          <Text style={styles.spanTitle}>Idade</Text>
         </View>
 
         <View style={styles.column}>
-          <Text style={styles.spanTitle}>Calendário</Text>
+          <Text style={styles.spanTitle}>Vacina</Text>
         </View>
       </View>
       <View
